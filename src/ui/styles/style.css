@@ -1,0 +1,82 @@
+/* GLOBAL */
+
+Screen {
+  background: $panel;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+/*  HEADER  */
+
+/* rgb(126, 126, 206); */
+
+#header {
+  margin-bottom: 1;
+  text-align: center;
+  height: 1;
+  background: $primary-background-darken-3;
+  color: white;
+  text-style: bold;
+}
+
+/* INPUT */
+
+#input_container {
+  width: 100%;
+  height: 1fr;
+  align: center middle;
+  content-align: center middle;
+}
+
+#search_input {
+  width: 70;
+  margin-bottom: 14;
+  margin-left: 55;
+  border: hkey rgb(97, 97, 233);
+  color: rgb(186, 216, 220);
+  background: transparent;
+  text-style: bold;
+  align: center middle;
+}
+
+/* screen background dim */
+LoaderScreen {
+  background: $background 70%;
+}
+
+/* full screen flex container */
+#loader_root {
+  width: 100%;
+  height: 100%;
+  align: center middle;
+}
+
+/* floating card */
+#loader_overlay {
+  width: 100%;
+  padding: 2 4;
+
+  /* layout: vertical; */
+  align: center middle;
+
+  background: $panel;
+  border: round $primary;
+}
+
+#title {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 1;
+
+  text-style: bold;
+  padding: 1 0;
+}
+
+/* spinner */
+#spinner {
+  width: 100%;
+  padding-top: -30;
+  content-align: center middle;
+}
