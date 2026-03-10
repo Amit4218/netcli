@@ -1,0 +1,8 @@
+npm install --save-dev pkg
+
+// Important: JSX Must Be Built First
+npm install --save-dev esbuild
+
+// Build & Package
+npm run build
+npm run package
