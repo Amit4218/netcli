@@ -1,0 +1,32 @@
+{
+  "metadata": "base_link",
+  "movies": [
+    {
+      "title": "movie_title",
+      "frame_link": "first_iframe_src",
+      "watched_date": "09 March",
+      "movie_id": "102345"
+    }
+  ],
+  "series": [
+    {
+      "title": "series_title",
+      "watched_date": "09 March",
+      "referrer":"reffer",
+      "watched_episodes": [
+        {
+          "id": "ep-id",
+          "frame_link": "frame_src"
+        },
+        {
+          "id": "ep-id",
+          "frame_link": "frame_src"
+        },
+        {
+          "id": "ep-id",
+          "frame_link": "frame_src"
+        }
+      ]
+    }
+  ]
+}
