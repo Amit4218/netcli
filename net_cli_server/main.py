@@ -27,15 +27,20 @@ def verify():
 def episode():
     data = request.json
     result = scrape_episode_link(ep_id=data.get("ep_id"), movie_link=(data.get("link")))  # type: ignore
-    print(result)
     MOVIE_PLAYER.put(result)
     return {"success": True, "message": "playing the now"}
 
+@route("/play", method="POST")
+def play():
+    data = request.json
+    movie = {"link":data["link"], "referrer":data["referrer"] if data["referrer"] else None}
+    MOVIE_PLAYER.put(movie)
+    return {"success":True}
 
 if __name__ == "__main__":
     threading.Thread(target=movie_scheduler, daemon=True).start()
     run(host="0.0.0.0", port=6789)
 
 
-# https://ww3.soap2dayhdz.com/film/superman-1630859528
-# https://ww3.soap2dayhdz.com/film/my-adventures-with-superman-season-1-1630855431
+
+

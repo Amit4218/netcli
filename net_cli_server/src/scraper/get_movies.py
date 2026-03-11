@@ -58,7 +58,6 @@ def scrape_movie_link(movie_link: str, head: bool = True):
         page.wait_for_timeout(3000)
         browser.close()
 
-        print(url[0].split("=")[-1])
         movie_id = url[0].split("=")[-1]
         languages_options = get_movie_urls(movie_id=movie_id)
         data = {

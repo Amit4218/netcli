@@ -4,25 +4,9 @@ import subprocess
 import requests
 
 
-def start_player(url, referrer):
+def start_player(url, referrer="https://ployan.live"):
     """helper to strat streaming the movie or series"""
     subprocess.run(["mpv", f"--referrer={referrer}", url])
-
-
-def get_episode_url(link: str):
-
-    response = requests.get(link)
-
-    movie_hash = response.json()["info"]
-    print("hash", movie_hash)
-    referrer = link.split("/get")[0]
-
-    data = {
-        "referrer": referrer,
-        "link": f"{referrer}/hls/{movie_hash}/master.m3u8",
-    }
-
-    return data
 
 
 def get_movie_urls(movie_id: str):

@@ -9,7 +9,10 @@ def movie_scheduler():
     while True:
         if not MOVIE_PLAYER.empty():
             movie = MOVIE_PLAYER.get()
-            print("playing")
-            start_player(movie["link"], movie["referrer"])
+            
+            if movie["link"] and movie["referrer"]:
+                start_player(movie["link"], movie["referrer"])
+            else:
+                start_player(url=movie["link"]) 
 
         time.sleep(2)
