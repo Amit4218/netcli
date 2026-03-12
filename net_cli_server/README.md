@@ -1,6 +1,6 @@
 # Net-cli-server
 
-## Net-cli-server is the heart of the application and is responsible for the server-side operations like, searching movies, extracting playable link etc, for the `Net-cli` application. The server is build using `bottle` wsgi to handel request and serve response. The server also uses `playwright`, `requests` for third-party requests and url scraping
+Net-cli-server is the heart of the application and is responsible for the server-side operations like, searching movies, extracting playable link etc, for the `Net-cli` application. The server is build using `bottle` wsgi to handel request and serve response. The server also uses `playwright`, `requests` for third-party requests and url scraping
 
 ## Pre-requisites
 
@@ -13,7 +13,6 @@ You might also need to install:
 
 - [Playwright Browsers](https://playwright.dev/python/docs/intro)
 
----
 
 ## Features
 
