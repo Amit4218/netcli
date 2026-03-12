@@ -1,12 +1,15 @@
 import secrets
 import subprocess
-
 import requests
 
 
 def start_player(url, referrer="https://ployan.live"):
     """helper to strat streaming the movie or series"""
-    subprocess.run(["mpv", f"--referrer={referrer}", url])
+    subprocess.Popen(
+        ["mpv", "--really-quiet", "--no-terminal", f"--referrer={referrer}", url],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
 
 
 def get_movie_urls(movie_id: str):

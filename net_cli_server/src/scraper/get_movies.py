@@ -63,6 +63,7 @@ def scrape_movie_link(movie_link: str, head: bool = True):
         data = {
             "movie": True,
             "message": "Please select an language",
-            "episodes": languages_options,
+            "language": languages_options,
+            "base_link": movie_link,
         }
         return data
