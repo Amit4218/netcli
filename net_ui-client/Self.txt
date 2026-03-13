@@ -1,0 +1,12 @@
+
+Application = {
+
+// Movies
+// SeriesEpisode
+// Loading
+// ActiveScreen
+// Selected Movies/Series
+
+}
+
+

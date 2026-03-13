@@ -6,20 +6,20 @@ import axios from "axios";
 import { ScrollList } from "ink-scroll-list";
 import Loader from "./Loader";
 
-function SelectEpisode() {
-  const { episodes, isLoading, setIsLoading } = useSession();
+function SelectLanguage() {
+  const { currentWatching, isLoading, setIsLoading } = useSession();
   const { exit } = useApp();
-  const { isFocused } = useFocus({ id: "episodes" });
+  const { isFocused } = useFocus({ id: "languages" });
 
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [success, setSuccess] = useState(false);
-  const [selectedEpisode, setSelectedEpisode] = useState(null);
+  const [selectedMovie, setSelectedMovie] = useState(null);
 
   const handleSelect = async () => {
     try {
-      const res = await axios.post(`http://localhost:6789/get`, {
-        link: episodes.base_link,
-        ep_id: selectedEpisode,
+      const res = await axios.post(`http://localhost:6789/play`, {
+        link: selectedMovie.url,
+        referrer: selectedMovie.header.referrer,
       });
       if (res.data.success) {
         setSuccess(true);
@@ -33,22 +33,26 @@ function SelectEpisode() {
 
   useInput((input, key) => {
     if (!isFocused) return;
-    if (episodes.length === 0) return;
+    if (currentWatching.length === 0) return;
     if (isLoading) return;
 
     if (key.downArrow) {
-      setSelectedIndex((prev) => (prev === episodes.length - 1 ? 0 : prev + 1));
+      setSelectedIndex((prev) =>
+        prev === currentWatching.length - 1 ? 0 : prev + 1,
+      );
     }
 
     if (key.upArrow) {
-      setSelectedIndex((prev) => (prev === 0 ? episodes.length - 1 : prev - 1));
+      setSelectedIndex((prev) =>
+        prev === 0 ? currentWatching.length - 1 : prev - 1,
+      );
     }
 
     if (key.return) {
-      const selected = episodes[selectedIndex];
+      const selected = currentWatching[selectedIndex];
       if (!selected) return;
 
-      setSelectedEpisode(selected);
+      setSelectedMovie(selected);
       setIsLoading(true);
       handleSelect(selected);
     }
@@ -58,8 +62,8 @@ function SelectEpisode() {
 
   return (
     <>
-      {isLoading && selectedEpisode && (
-        <Loader titleText={`Searching for ${selectedEpisode}`} />
+      {isLoading && selectedMovie && (
+        <Loader titleText={`Searching for ${selectedMovie}`} />
       )}
 
       {
@@ -70,7 +74,7 @@ function SelectEpisode() {
           flexDirection="column"
           borderStyle="round"
           borderColor={isFocused ? "cyan" : "gray"}
-          titles={[session.message]}
+          titles={["Please select a language"]}
           titleJustify="center"
         >
           {!success && (
@@ -79,11 +83,11 @@ function SelectEpisode() {
               flexDirection="column"
               paddingX={1}
             >
-              {episodes.map((ep, idx) => (
-                <Box key={`${ep.title}-${idx}`} height={1}>
+              {currentWatching.map((m, idx) => (
+                <Box key={idx} height={1}>
                   <Text color={idx === selectedIndex ? "green" : "white"}>
                     {idx === selectedIndex ? "> " : "  "}
-                    {ep}
+                    {m.language}
                   </Text>
                 </Box>
               ))}
@@ -100,4 +104,4 @@ function SelectEpisode() {
   );
 }
 
-export default SelectEpisode;
+export default SelectLanguage;

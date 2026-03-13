@@ -8,12 +8,9 @@ import axios from "axios";
 
 function Input() {
   const [movieName, setMovieName] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
   const { isFocused } = useFocus({ id: "input", isFocusable: true });
   const { focus } = useFocusManager();
-
-  const { setSession } = useSession();
+  const { setMovies, setIsLoading, isLoading } = useSession();
 
   const handleInput = async (val) => {
     if (!movieName.trim()) return;
@@ -21,7 +18,7 @@ function Input() {
     setIsLoading(true);
 
     const res = await axios.get(`http://localhost:6789/${movieName}`);
-    setSession(res.data);
+    setMovies(res.data);
     focus("movies");
     setMovieName("");
     setIsLoading(false);
@@ -56,8 +53,9 @@ function Input() {
           />
         </TitledBox>
       )}
-
-      {isLoading && <Loader titleText={`Searching for '${movieName}' `} />}
+      {isLoading && isFocused && (
+        <Loader titleText={`Searching for '${movieName}' `} />
+      )}
     </>
   );
 }

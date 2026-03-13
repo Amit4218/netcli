@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSession } from "../context/useSession";
 import { Box, Text, useInput, useApp, useFocus } from "ink";
 import { TitledBox } from "@mishieck/ink-titled-box";
@@ -6,17 +6,23 @@ import axios from "axios";
 import { ScrollList } from "ink-scroll-list";
 import Loader from "./Loader";
 import SelectEpisode from "./SelectEpisode";
+import SelectLanguage from "./SelectLanguage";
 
 function Movies() {
-  const { session, setSession } = useSession();
+  const {
+    setEpisodes,
+    episodes,
+    movies,
+    isLoading,
+    setIsLoading,
+    setCurrentWatching,
+    currentWatching,
+  } = useSession();
+
   const { exit } = useApp();
-  const { isFocused } = useFocus({ id: "movies" });
+  const { isFocused, focus } = useFocus({ id: "movies" });
 
-  const [movies, setMovies] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [hideMovies, setHideMovies] = useState(false);
-
-  const [isLoading, setIsLoading] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   const handleSelect = async (link) => {
@@ -26,24 +32,23 @@ function Movies() {
       });
 
       if (res.status == 200) {
-        setSession(res.data);
-        setHideMovies(true);
-        focus("episodes");
+        setIsLoading(false);
+
+        if (res.data.movie == true) {
+          focus("languages");
+          setCurrentWatching(res.data);
+        } else {
+          setEpisodes(res.data);
+          focus("episodes");
+        }
       }
     } catch (err) {
-      console.error(err);
-      setMovies([]);
+      // maybe do a notification on error
+      setIsLoading(false);
     } finally {
       setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    if (Array.isArray(session)) {
-      setMovies(session);
-      setSelectedIndex(0);
-    }
-  }, [session]);
 
   useInput((input, key) => {
     if (!isFocused) return;
@@ -76,7 +81,7 @@ function Movies() {
         <Loader titleText={`Searching for ${selectedMovie.title}`} />
       )}
 
-      {!hideMovies && (
+      {episodes && (
         <TitledBox
           flexGrow={1}
           width="100%"
@@ -109,7 +114,10 @@ function Movies() {
           )}
         </TitledBox>
       )}
-      {hideMovies && <SelectEpisode />}
+
+      {episodes && !currentWatching && <SelectEpisode />}
+
+      {currentWatching && !episodes && <SelectLanguage />}
     </>
   );
 }
