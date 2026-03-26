@@ -1,0 +1,13 @@
+[project]
+name = "net-cli"
+version = "0.1.0"
+description = "A cli tool to watch movies, series and download"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "beautifulsoup4>=4.14.3",
+  "playwright>=1.58.0",
+  "questionary>=2.1.1",
+  "requests>=2.32.5",
+  "typer>=0.24.1",
+]
